@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>d3 </title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/element-plus/2.9.4/index.css" />
+  </head>
+  <body>
+    <div id="app">
+      <el-table>
+        <el-table-column></el-table-column>
+        <el-table-column></el-table-column>
+      </el-table>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "//cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.cjs.js",
+          "element-plus": "//cdnjs.cloudflare.com/ajax/libs/element-plus/2.9.4/index.full.js"
+        }
+      }
+    </script>
+
+    <script>
+      const { createApp, ref, react } = Vue;
+      const { ElTable, ElTableColumn } = ElementPlus;
+
+      createApp({
+        components: {
+          ElTable,
+          ElTableColumn,
+        },
+        setup() {
+          return {
+            name: "Mino",
+          };
+        },
+      }).mount("#app");
+
+      document.querySelector('link[rel="stylesheet"]').addEventListener("load", () => {
+        console.log("Element Plus styles loaded");
+      });
+    </script>
+  </body>
+</html>
