@@ -3,45 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>d3 </title>
+    <title>large data</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/element-plus/2.9.4/index.css" />
   </head>
   <body>
     <div id="app">
-      <el-table>
-        <el-table-column></el-table-column>
-        <el-table-column></el-table-column>
-      </el-table>
+      <el-input
+        placeholder="测试list长度"
+        type="number"
+        v-model="listLength"
+        style="width: 200px; margin-right: 16px"
+      ></el-input>
+
+      <el-button type="primary" @click="handleClick">open dialog</el-button>
+
+      <el-dialog v-model="visible" title="title" style="height: 500px">
+        <el-select>
+          <el-option v-for="item in list" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        </el-select>
+      </el-dialog>
     </div>
 
     <script type="importmap">
       {
         "imports": {
-          "vue": "//cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.cjs.js",
-          "element-plus": "//cdnjs.cloudflare.com/ajax/libs/element-plus/2.9.4/index.full.js"
+          "vue": "//cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.esm-browser.min.js",
+          "element-plus": "//unpkg.com/element-plus@2.9.9/dist/index.full.mjs",
+          "echarts": "//cdnjs.cloudflare.com/ajax/libs/echarts/5.6.0/echarts.min.js"
         }
       }
     </script>
 
-    <script>
-      const { createApp, ref, react } = Vue;
-      const { ElTable, ElTableColumn } = ElementPlus;
+    <script type="module">
+      import { createApp, ref, watch } from "vue";
+      import { ElButton, ElDialog, ElSelect, ElOption, ElInput } from "element-plus";
 
       createApp({
         components: {
-          ElTable,
-          ElTableColumn,
+          ElButton,
+          ElDialog,
+          ElSelect,
+          ElOption,
+          ElInput,
         },
         setup() {
+          const visible = ref(false);
+          const listLength = ref(100);
+          const list = ref([]);
+
+          function handleClick() {
+            const rawList = new Array(~~listLength.value).fill(0);
+            list.value = rawList.map((v, i) => ({
+              id: i,
+              name: `name - ${i}`,
+            }));
+
+            visible.value = true;
+          }
+
           return {
-            name: "Mino",
+            listLength,
+            visible,
+            list,
+            handleClick,
           };
         },
       }).mount("#app");
-
-      document.querySelector('link[rel="stylesheet"]').addEventListener("load", () => {
-        console.log("Element Plus styles loaded");
-      });
     </script>
   </body>
 </html>
